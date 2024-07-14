@@ -9,7 +9,7 @@ const path = require("path");
 const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpecs = require("./swaggerConfig");
-
+const os = require("os");
 // creating instance
 const app = express();
 
