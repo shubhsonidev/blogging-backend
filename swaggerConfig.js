@@ -8,7 +8,7 @@ const options = {
     info: {
       title: "BLOGIFY PRIVATE API DOC",
       version: "1.0.0",
-      description: "",
+      description: "Blogging application",
     },
   },
   apis: ["./routes/*.js"], // Path to the API docs

@@ -18,24 +18,28 @@
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               fullName:
  *                 type: string
- *                 example: johndoe
+
+ *               email:
+ *                 type: string
  *               password:
  *                 type: string
- *                 example: password123
+
  *     responses:
  *       201:
- *         description: User registered successfully
+ *         description: User created successfully
  *       400:
- *         description: Invalid input
+ *         description: All fields are required
+ *       500:
+ *         description: An error occurred while creating the user
  */
 
 /**
  * @swagger
- * /signin:
+ * /user/signin:
  *   post:
- *     summary: Authenticate a user
+ *     summary: signin a user
  *     tags: [User]
  *     requestBody:
  *       required: true
@@ -44,26 +48,37 @@
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               email:
  *                 type: string
- *                 example: johndoe
  *               password:
  *                 type: string
- *                 example: password123
  *     responses:
  *       200:
- *         description: User authenticated successfully
+ *         description: User found and matched
+ *       400:
+ *         description: All fields are required
  *       401:
- *         description: Invalid credentials
+ *         description: Password is incorrect
+ *       404:
+ *         description: User not found /
+ *       500:
+ *         description: An error occurred while creating the user
  */
 
 /**
  * @swagger
- * /logout:
+ * /user/logout:
  *   get:
- *     summary: Log out a user
+ *     summary: Logout a user
  *     tags: [User]
  *     responses:
  *       200:
- *         description: User logged out successfully
+ *         description: logged out successfully
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Blog
+ *   description: Blog Actions
  */

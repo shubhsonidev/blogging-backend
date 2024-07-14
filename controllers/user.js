@@ -55,7 +55,7 @@ async function handleSignIn(req, res) {
   });
 
   if (!existingUser) {
-    return res.status(400).json({
+    return res.status(404).json({
       success: false,
       message: "User not found",
     });
@@ -67,7 +67,7 @@ async function handleSignIn(req, res) {
   const rcvdPasswordHashed = createHmac("sha256", salt).update(password).digest("hex");
 
   if (storedPasswordHashed !== rcvdPasswordHashed) {
-    return res.status(400).json({
+    return res.status(401).json({
       success: false,
       message: "Password is incorrect",
     });
@@ -76,7 +76,7 @@ async function handleSignIn(req, res) {
   const token = createTokenForUser(existingUser);
   return res
     .cookie("token", token)
-    .status(201)
+    .status(200)
     .json({
       success: true,
       message: "User found and matched",
