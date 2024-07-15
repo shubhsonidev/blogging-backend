@@ -21,7 +21,7 @@ async function handleAddBlog(req, res) {
 
   try {
     const postData = {
-      key: "a9d8e0d6bede297ea3e3d43f2a73f304",
+      key: process.env.IMGBB_KEY,
       image: coverImageURL,
     };
 
