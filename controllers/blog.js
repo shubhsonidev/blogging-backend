@@ -1,4 +1,5 @@
 const Blog = require("../models/blog");
+const axios = require("axios");
 
 async function handleAddBlog(req, res) {
   if (!req.user) {
@@ -7,22 +8,47 @@ async function handleAddBlog(req, res) {
       message: "Authentication required",
     });
   }
-  const { title, body } = req.body;
-  const coverImageURL = req.file ? `/uploads/${req.file.filename}` : null;
+  const { title, body, coverImageURL } = req.body;
 
-  if (!title || !body || !coverImageURL) {
+  console.log(req.body);
+
+  if (!title || !body) {
     return res.status(401).json({
       success: false,
       message: "All fields are required",
     });
   }
 
-  // Create a new blog post (this example assumes you have a Blog model)
   try {
+    const postData = {
+      key: "a9d8e0d6bede297ea3e3d43f2a73f304",
+      image: coverImageURL,
+    };
+
+    // Convert to FormData
+    const formData = new FormData();
+    formData.append("key", postData.key);
+    formData.append("image", postData.image);
+
+    const response = await axios.post("https://api.imgbb.com/1/upload", postData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(response.data.data.url);
+
+    if (!response.data.data.url) {
+      return res.status(500).json({
+        success: false,
+        message: "File upload error occured: internal server error",
+      });
+    }
+
     const newBlog = await Blog.create({
       title: title,
       body: body,
-      coverImageURL: coverImageURL,
+      coverImageURL: response.data.data.url,
       createdBy: req.user._id,
     });
 

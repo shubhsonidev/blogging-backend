@@ -5,11 +5,10 @@ const { connectToDB } = require("./connection");
 const userRouter = require("./routes/user");
 const blogRouter = require("./routes/blog");
 const cookieParser = require("cookie-parser");
-const path = require("path");
 const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpecs = require("./swaggerConfig");
-const os = require("os");
+
 // creating instance
 const app = express();
 
@@ -25,7 +24,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"));
-app.use(express.static(os.tmpdir()));
 
 // routes
 app.use("/user", userRouter);
